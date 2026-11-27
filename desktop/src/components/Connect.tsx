@@ -677,7 +677,7 @@ function ExistingApp({ state, question, send, back }: { state: SetupState; quest
         {question.id === "app_id" ? (
           <div className="sub-manual" style={{ paddingLeft: 14 }}>
             <div className="field-wrap">
-              <input className="field" autoFocus placeholder="App link or ID" value={typed} autoComplete="off" spellCheck={false}
+              <input className="field" autoFocus aria-label="App link or ID" placeholder="App link or ID" value={typed} autoComplete="off" spellCheck={false}
                 onChange={(e) => setTyped(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter" && id) { setChosen(id); send(typed.trim()); } }} />
               <button className="p-btn soft sm in-btn" disabled={!id} onClick={() => { setChosen(id); send(typed.trim()); }}>Use it</button>
             </div>

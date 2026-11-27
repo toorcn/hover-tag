@@ -304,8 +304,21 @@ export function ThinkingRow({ entry, value, onChange, disabled }: {
     <div className="think">
       <span className="tlab">Thinking</span>
       <div className="segc" role="radiogroup" aria-label="Thinking level">
-        {levels.map((level) => (
+        {levels.map((level, index) => (
           <button key={level} role="radio" aria-checked={value === level} disabled={disabled} onClick={() => onChange(level)}
+            tabIndex={value === level || (!levels.includes(value ?? "") && index === 0) ? 0 : -1}
+            onKeyDown={(e) => {
+              const step = e.key === "ArrowRight" || e.key === "ArrowDown" ? 1
+                : e.key === "ArrowLeft" || e.key === "ArrowUp" ? -1 : 0;
+              if (!step) return;
+              e.preventDefault();
+              const buttons = e.currentTarget.parentElement?.querySelectorAll<HTMLButtonElement>('[role="radio"]');
+              const next = buttons?.[(index + step + levels.length) % levels.length];
+              if (next && !next.disabled) {
+                next.focus();
+                next.click();
+              }
+            }}
             title={level === entry.default_effort ? `${entry.label}'s default` : undefined}>
             {effortLabel(level)}{level === entry.default_effort && <i className="tdef" aria-label="default" />}
           </button>

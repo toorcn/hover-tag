@@ -7,7 +7,7 @@ export function ActivityArtifacts({ api, item }: { api: Bridge; item: ActivityIt
   const [error, setError] = useState("");
   if (!item.artifacts?.length) return null;
   return <>
-    <div className="activity-artifacts" aria-label="Created files">
+    <div className="activity-artifacts" role="group" aria-label="Created files">
       {item.artifacts.map((artifact, index) => {
         const uploaded = artifact.delivery === "uploaded";
         const target = uploaded ? artifact.url || item.artifact_thread_url : artifact.local_path;
